@@ -18,6 +18,16 @@ app.use('/_', express.static("files"))
 // token used for storing cookie values, needs to be set
 app.use(cookieParser('1312134234234'));
 
+// tell Express to render EJS files
+// By default, the program will look in the views folder
+app.engine('.ejs', require('ejs').__express);
+
+// this is so that we don't have to use file extentions when specifying which template to use
+app.set('view engine', 'ejs');
+
+const CITIES = ["New York", "Boston", "Oakland"]
+const NAME = "trent"
+
 // Basic GET request
 app.get('/', (req, res) => {
     // playing with cookies:
@@ -29,6 +39,10 @@ app.get('/', (req, res) => {
     res.send(`This is a GET request, you have been to this page ${req.cookies.times} times!`)
 })
 
+app.get('/template', (req, res) => {
+    res.render("default", cities=CITIES, myName=NAME)
+})
+
 // Basic POST request
 app.post('/', (req, res) => {
     res.send('This is a POST request')
@@ -36,6 +50,16 @@ app.post('/', (req, res) => {
 
 // you can also add methods for PUT & DELETE
 
+// ERROR PAGES
+app.get('/404', function(req, res, next){
+    next();
+});
+
+app.get('/403', function(req, res, next){
+    var err = new Error('not allowed!');
+    err.status = 403;
+    next(err);
+});
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)

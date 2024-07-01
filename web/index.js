@@ -15,11 +15,14 @@ app.use(express.static('public'))
 // This can be messy, so you may want to host static files under a folder
 app.use('/_', express.static("files"))
 
+// token used for storing cookie values, needs to be set
+app.use(cookieParser('1312134234234'));
+
 // Basic GET request
 app.get('/', (req, res) => {
     // playing with cookies:
     if(req.cookies.times){
-        res.cookie('times', req.cookies.times + 1, 60000)
+        res.cookie('times', parseInt(req.cookies.times,10) + 1, 60000)
     }else{
         res.cookie('times', 1, 60000)
     }

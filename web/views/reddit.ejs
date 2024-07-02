@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <!--
+    <%= api %>
+    -->
+    <head>
+        <title>(<%= api.data.after %>) Reddit Posts</title>
+    </head>
+    <body>
+        <% api.data.children.forEach(function(post){ %>
+            <h3><%= post.data.title %></h3>
+            <br>
+        <% }) %>
+    </body>
+</html>

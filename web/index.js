@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const port = 3000
 var cookieParser = require('cookie-parser');
+const axios = require("axios");
 
 // Serving Static files
 // Examples of static files include images, frontend JS scripts,
@@ -40,7 +41,19 @@ app.get('/', (req, res) => {
 })
 
 app.get('/template', (req, res) => {
-    res.render("default", cities=CITIES, myName=NAME)
+    res.render("default.ejs", {cities: CITIES, myName: NAME})
+})
+
+app.get('/templateWithHTTP', (req, res) => {
+    // 
+    axios
+        .get("https://www.reddit.com/r/popular.json")
+        // Show response data
+        .then((r) => 
+            res.render("reddit.ejs", {api: r.data})
+        )
+        .catch((err) => console.log(err));
+    
 })
 
 // Basic POST request

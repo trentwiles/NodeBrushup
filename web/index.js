@@ -3,6 +3,7 @@ const app = express()
 const port = 3000
 var cookieParser = require('cookie-parser');
 const axios = require("axios");
+const he = require('he');
 
 // Serving Static files
 // Examples of static files include images, frontend JS scripts,
@@ -55,6 +56,14 @@ app.get('/templateWithHTTP', (req, res) => {
         .catch((err) => console.log(err));
     
 })
+
+// custom paths & request query
+app.get('/search/:query?', function(req, res){
+    var query = req.params.query;
+    console.log(query)
+    console.log(req.query)
+    res.send(he.encode(query));
+});
 
 // Basic POST request
 app.post('/', (req, res) => {

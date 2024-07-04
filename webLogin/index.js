@@ -30,7 +30,8 @@ app.set('view engine', 'ejs');
 
 // respond with "hello world" when a GET request is made to the homepage
 app.get('/', (req, res) => {
-  res.send('hello world')
+  var date_time = new Date();
+  res.render('home', {year: date_time.getFullYear(), day: date_time.getDay(), title: "Home"})
 })
 
 
@@ -40,7 +41,8 @@ LOGIN PAGE
 Just render the login page, easy enough
 */
 app.get('/login', function(req, res){
-  res.render('login');
+  var title = "Login"
+  res.render('login', {title: title});
 });
 
 app.post('/login', function(req, res){
@@ -62,7 +64,7 @@ app.post('/login', function(req, res){
 })
 
 app.get('/user', function(req, res){
-  res.send(req.session.user)
+  res.send(req.session.user + "-")
 })
 
 /*

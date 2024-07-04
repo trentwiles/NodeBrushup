@@ -1,5 +1,5 @@
-<%= include(header.ejs) =%>
-<form action="/submit_form" method="post">
+<%- include('header.ejs') -%>
+<form action="/login" method="post">
     <label for="username">Username:</label><br>
     <input type="text" id="username" name="username" required><br><br>
 
@@ -8,4 +8,4 @@
 
     <input type="submit" value="Login">
 </form>
-<%= include(footer.ejs) =%>
+<%- include('footer.ejs') -%>

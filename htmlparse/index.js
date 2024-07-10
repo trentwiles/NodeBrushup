@@ -21,4 +21,15 @@ async function extractBooks(){
     })
 }
 
-extractBooks()
+async function extractCategories(){
+    const raw = await req.get()
+    const $ = cheerio.load(raw.data)
+
+    const x = cheerio.load($('ul.nav').html())
+    x('li').each((index, element) => {
+        console.log(x(element).text().trim())
+    })
+    
+}
+
+extractCategories()

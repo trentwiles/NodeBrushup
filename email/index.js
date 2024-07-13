@@ -32,11 +32,16 @@ async function getNews(){
     var htm = "<hr>"
     for(var i = 0; i < 3; i++){
         var current = newsItems[i]
-        htm += `${current["title"]}`
+        htm += `<a href="${current["url"]}">${current["title"]}</a>`
         htm += "<hr>"
     }
 
-    console.log(htm)
+    return htm
 }
-getNews()
+
+async function mailer(){
+    const code = await getNews()
+    send.send('Daily F1 News', 'me@trentwil.es', 'Top Three F1 Stories', 'Enable HTML to View Email', code)
+}
+mailer()
 // send.send('Frank', 'me@trentwil.es', 'A New Email', 'test', '<i>test</i>')

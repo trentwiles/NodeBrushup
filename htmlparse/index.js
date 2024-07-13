@@ -10,14 +10,17 @@ const req = axios.create({
     baseURL: BASE_URL
 });
 
-async function extractBooks(){
-    const raw = await req.get()
+async function extractBooks(path="", catName=""){
+    const raw = await req.get(path)
     const $ = cheerio.load(raw.data)
 
     $('li.col-xs-6').each((index, element) => {
         var x = cheerio.load(element)
         console.log(x('a').text())
         console.log(BASE_URL + x('a').attr('href'))
+        if(catName != ""){
+            console.log("(book above is under category " + catName)
+        }
     })
 }
 
@@ -27,9 +30,31 @@ async function extractCategories(){
 
     const x = cheerio.load($('ul.nav').html())
     x('li').each((index, element) => {
-        console.log(x(element).text().trim())
+        var name = x(element).text().trim()
+        const z = cheerio.load(x(element).html())
+        var path = z('a').attr("href")
+        console.log(name)
+        extractBooks(path, name)
     })
+    console.log("===========================================================")
+    console.log("===========================================================")
     
 }
 
-extractCategories()
+async function pageination(nextPath=""){
+    if(nextPath == ""){
+        // we are on the first page
+        const raw = await req.get(nextPath)
+        const $ = cheerio.load(raw.data)
+        $('a').each((index, element) => {
+            if($(element).text() == "next"){
+                console.log($('title').text())
+                return pageination($(element).attr('href'))
+            }
+        })
+    }else{
+        // we are not on the first page
+    }
+}
+
+pageination()

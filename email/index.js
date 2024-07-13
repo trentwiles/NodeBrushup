@@ -32,6 +32,7 @@ async function getNews(){
     var htm = "<hr>"
     for(var i = 0; i < 3; i++){
         var current = newsItems[i]
+        htm += `<img src="${current['image']} />"`
         htm += `<a href="${current["url"]}">${current["title"]}</a>`
         htm += "<hr>"
     }

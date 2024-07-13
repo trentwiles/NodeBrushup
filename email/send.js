@@ -13,6 +13,19 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+function convertEmailListToFormat(emailList){
+    // emailList should look like ["x@y.com", "z@x.com", ...]
+    if(emailList.length == 1){
+        return emailList[0]
+    }
+    var str = ""
+    for(var i = 0; i < emailList.length; i++){
+        str += `${emailList[i]},`
+    }
+    // return with the last , trimmed off
+    return str.substring(0,str.length-1)
+}
+
 // async..await is not allowed in global scope, must use a wrapper
 async function send(name, to, subject, textBody, htmlBody) {
   const from = process.env.SMTP_USER
@@ -27,4 +40,7 @@ async function send(name, to, subject, textBody, htmlBody) {
   console.log("Message sent: %s", info.messageId);
 }
 
-module.exports = {send}
+module.exports = {
+    send,
+    convertEmailListToFormat
+}

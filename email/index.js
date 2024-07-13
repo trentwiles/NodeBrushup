@@ -25,15 +25,18 @@ async function getNews(){
         var time = x('time.ms-item__date').text().trim()
         var image = x('img').attr('src')
         var metaData = {"title": title, "url": url, "time": time, 'image': image}
-        console.log(metaData)
-        newsItems.push(metaData)
 
-        var statement = (newsItems.length > 2)
-        console.log(statement)
-        if(statement){
-            return newsItems
-        }
+        newsItems.push(metaData)
     })
+
+    var htm = "<hr>"
+    for(var i = 0; i < 3; i++){
+        var current = newsItems[i]
+        htm += `${current["title"]}`
+        htm += "<hr>"
+    }
+
+    console.log(htm)
 }
 getNews()
 // send.send('Frank', 'me@trentwil.es', 'A New Email', 'test', '<i>test</i>')
